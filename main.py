@@ -38,10 +38,6 @@ for i in symbols2:
     resTxt[:] = [x for x in resTxt if x != i]
 resTxt[:] = [x for x in resTxt if x != '']
 
-print()
-for i in resTxt:
-    print(i)
-
 # delete the symbols in the start and in the end
 suffix = ('!', '?', ',', '.', ':', ';', '+', '-', '*', '/')
 
