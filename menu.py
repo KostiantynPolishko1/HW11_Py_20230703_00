@@ -179,10 +179,7 @@ def func_6(ind_m, ind_s, menu_s, txt: str, logic: bool = ''): #Num spaces
     ind_s = 5 if logic else ind_s
     print("\n{}.{} {}".format(ind_m + 1, ind_s + 1, menu_s[ind_s][0]))
 
-    num_space = 0
-    for i in txt:
-        if i == ' ':
-            num_space += 1
+    num_space = txt.count(' ')
 
     num_sym = len(txt)
     print("\tQty of spaces -> ", num_space if num_sym else "NO TEXT!")
