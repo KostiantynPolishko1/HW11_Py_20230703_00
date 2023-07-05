@@ -239,8 +239,8 @@ def func_10(ind_m, ind_s, menu_s, txt=None):
 
 #======================MENU FUNCTION=============================#
 
-def input_txt(ind, txt=None):
-    print("\n {}. Input:".format(ind + 1))
+def input_txt(ind, menu, txt=None):
+    print("\n {}. {}:".format(ind + 1, menu[ind][0]))
     str_txt = input("\t-> ")
     # str_txt = "-12.3-35=40, 50*10+30/40 Hello, " \
     #      ":!.word2023!0.23/cup:?- How\nis\tgoing your deals?" \
@@ -249,7 +249,7 @@ def input_txt(ind, txt=None):
     if exit_menu():
         return str_txt
 
-def report_txt(ind, txt):
+def report_txt(ind, menu, txt):
     ind_sub = 0
     menu_sub = {
         0: ["Num symbols", func_1],
@@ -265,7 +265,7 @@ def report_txt(ind, txt):
     }
 
     while True:
-        print("\n {}. Reports:".format(ind+1))
+        print("\n {}. {}:".format(ind+1, menu[ind][0]))
         print_menu(ind_sub, menu_sub, "report", ind)
         print(" \"w\" - Down, \"s\" - Up: -> ", end='')
         ind_sub, sub_operation = receive_pos(ind_sub, "report")
@@ -276,11 +276,41 @@ def report_txt(ind, txt):
             if type(temp_value) == bool and temp_value:
                 break
 
-def modify_txt(ind, txt):
-    print("\n {}. Modify:".format(ind+1))
+def modify_txt(ind, menu, txt_in):
 
-def exit_txt(ind, txt=None):
-    print("\n {}. Exit".format(ind+1))
+    symbol_dict = {}
+    symbol_new, symbol_old = '', ''
+    while True:
+        print("\n {}. {}:".format(ind + 1, menu[ind][0]))
+        print("Text:\n\t", txt_in)
+
+        print("List:")
+        for i in symbol_dict:
+            print("\told: \'{}\' -> new: \'{}\'".format(i, symbol_dict[i]))
+
+        print("Fill symbols:")
+        symbol_old = input("\told -> ")
+        symbol_new = input("\tnew -> ")
+        symbol_dict[symbol_old] = symbol_new
+
+        out_submenu = input("\tcontinue ")
+        if not out_submenu:
+            os.system('CLS')
+            continue
+        else:
+            break
+
+    print("Replaced:")
+    for i in symbol_dict:
+        print("\told: \'{}\' -> new: \'{}\'".format(i, symbol_dict[i]))
+        txt_in = txt_in.replace(i, symbol_dict[i])
+
+    print("Result:\n\t-> ", txt_in)
+
+    exit_menu()
+
+def exit_txt(ind, menu, txt=None):
+    print("\n {}. {}".format(ind+1, menu[ind][0]))
     return True
 
 #======================main=============================#
@@ -302,7 +332,7 @@ while True:
     clean_s()
 
     if not operation:
-        tempValue = menu_f[ind_menu][1](ind_menu, strTxt)
+        tempValue = menu_f[ind_menu][1](ind_menu, menu_f, strTxt)
         if type(tempValue) == str:
             strTxt = tempValue
         elif type(tempValue) == bool and tempValue:
